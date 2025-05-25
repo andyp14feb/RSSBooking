@@ -15,6 +15,13 @@ this project serves as the final practicum submission.
 
 ---
 
+## 📦 Sreenshots
+
+![JustAScreenshot](https://github.com/andyp14feb/RSSBooking/blob/main/2025-05-25_100436_001__ScreenShots.jpg)
+
+
+---
+
 ## 📦 What This App Does
 
 This is a **web-based booking system** for a massage parlor (Rumah Sehat Seruni), allowing customers to book therapy sessions with the following features:
