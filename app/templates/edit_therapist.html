@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Edit Therapist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 p-6">
+    <div class="max-w-md mx-auto bg-white p-6 shadow-md rounded">
+        <h1 class="text-xl font-bold mb-4">Edit Therapist</h1>
+        <form method="post" action="/admin/edit-therapist" class="space-y-3">
+            <input type="hidden" name="id" value="{{ therapist.id }}">
+            <div>
+                <label class="block mb-1">Name</label>
+                <input type="text" name="name" value="{{ therapist.name }}" class="w-full border p-2 rounded" required>
+            </div>
+            <div>
+                <label class="block mb-1">Gender</label>
+                <select name="gender" class="w-full border p-2 rounded">
+                    <option value="male" {% if therapist.gender=="male" %}selected{% endif %}>Male</option>
+                    <option value="female" {% if therapist.gender=="female" %}selected{% endif %}>Female</option>
+                </select>
+            </div>
+            <div class="text-right">
+                <button type="submit" class="bg-green-700 text-white px-4 py-1 rounded">Save</button>
+                <a href="/admin" class="ml-2 text-gray-500">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

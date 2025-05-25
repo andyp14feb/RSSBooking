@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Booking Confirmation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-green-50 text-gray-800">
+    <div class="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-xl">
+        <h1 class="text-2xl font-bold text-green-700 text-center mb-4">Booking Confirmed ✅</h1>
+
+        <p class="text-center text-sm text-gray-500 mb-6">Your appointment has been successfully booked!</p>
+
+        <div class="space-y-2 text-sm">
+            <p><strong>Name:</strong> {{ booking.customer_name }}</p>
+            <p><strong>Phone:</strong> {{ booking.phone }}</p>
+            <p><strong>Service:</strong> {{ service.name }} ({{ service.duration }} min)</p>
+            <p><strong>Therapist:</strong> {{ therapist.name }} ({{ therapist.gender }})</p>
+            <p><strong>Date:</strong> {{ booking.date }}</p>
+            <p><strong>Time:</strong> {{ booking.start_time }} → {{ booking.end_time }}</p>
+        </div>
+
+        <a href="https://wa.me/6281218127256?text={{ whatsapp_message | urlencode }}"
+            class="mt-4 inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700" target="_blank">
+            📩 Confirm via WhatsApp
+        </a>
+
+        <a href="/" class="block mt-6 text-center bg-green-700 text-white py-2 rounded hover:bg-green-800">Back to
+            Booking</a>
+    </div>
+</body>
+
+</html>

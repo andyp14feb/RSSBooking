@@ -1,0 +1,14 @@
+<nav class="bg-green-800 text-white p-3 mb-4">
+    <div class="flex justify-between items-center max-w-6xl mx-auto">
+        <div class="space-x-4 text-sm">
+            <a href="/admin" class="hover:underline">Dashboard</a>
+            <a href="/admin/upcoming" class="hover:underline">Booking Summary</a>
+            <a href="/admin/change-password" class="hover:underline">Change Password</a>
+            <a href="/" class="hover:underline">Booking Page</a>
+        </div>
+        <div class="text-xs text-right">
+            Logged in as <strong>{{ current_user }}</strong> ({{ current_role }}) |
+            <a href="/logout" class="text-red-200 hover:underline">Logout</a>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800">
+    <div class="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-xl">
+        <h1 class="text-2xl font-bold text-center text-green-800">Rumah Sehat Seruni</h1>
+        <p class="text-center text-sm text-gray-600">Schedule an Appointment</p>
+        <p class="text-center text-xs text-gray-500 mb-6">every day except Friday, from 08:00 to 15:00</p>
+
+        <form method="post">
+            <!-- Customer Info -->
+            <div class="mb-4">
+                <h2 class="font-semibold mb-2">Customer Information</h2>
+                <input name="name" type="text" placeholder="Name" value="{{ form_data.name if form_data else '' }}"
+                    class="w-full p-2 border border-gray-300 rounded mb-2" />
+                <input name="phone" type="tel" placeholder="Phone Number"
+                    value="{{ form_data.phone if form_data else '' }}"
+                    class="w-full p-2 border border-gray-300 rounded mb-2" />
+                <div class="flex gap-4">
+                    <label class="flex items-center gap-1">
+                        <input type="radio" name="gender" value="male" class="accent-green-700" {% if form_data and
+                            form_data.gender=='male' %}checked{% endif %} />
+                        Male
+                    </label>
+                    <label class="flex items-center gap-1">
+                        <input type="radio" name="gender" value="female" class="accent-green-700" {% if form_data and
+                            form_data.gender=='female' %}checked{% endif %} />
+                        Female
+                    </label>
+                </div>
+            </div>
+            <!-- Therapist -->
+            <div class="mb-4">
+                <label for="therapist_id" class="block font-semibold mb-1">Choose a Therapist</label>
+                <!-- <select name="therapist_id" class="w-full border p-2 rounded">
+                    {% for t in therapists %}
+                    <option value="{{ t.id }}">{{ t.name }} ({{ t.gender }})</option>
+                    {% endfor %}
+                </select> -->
+                <select name="therapist_id" class="w-full border p-2 rounded">
+                    {% for t in therapists %}
+                    <option value="{{ t.id }}" {% if form_data and form_data.therapist_id==t.id %}selected{% endif %}>
+                        {{ t.name }} ({{ t.gender }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <!-- Time Selection -->
+            <!-- <div class="mb-4">
+                <h2 class="font-semibold mb-2">Select an Available Time</h2>
+                <input type="date" name="date" value="2025-05-22" class="p-2 border rounded w-full mb-2" />
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" class="bg-red-400 text-white px-4 py-1 rounded">08:00</button>
+                    <button type="button" class="bg-green-700 text-white px-4 py-1 rounded">10:00</button>
+                    <button type="button" class="bg-white border px-4 py-1 rounded">12:00</button>
+                    <button type="button" class="bg-white border px-4 py-1 rounded">13:00</button>
+                    <button type="button" class="bg-white border px-4 py-1 rounded">14:00</button>
+                </div>
+                <div class="text-sm mt-2 space-y-1">
+                    <p><span class="inline-block w-3 h-3 bg-green-700 rounded-full mr-1"></span>Chosen time</p>
+                    <p><span class="inline-block w-3 h-3 bg-red-400 rounded-full mr-1"></span>Unavailable</p>
+                    <p><span
+                            class="inline-block w-3 h-3 bg-white border border-gray-400 rounded-full mr-1"></span>Available
+                    </p>
+                </div>
+            </div> -->
+            <div class="mb-4">
+                <h2 class="font-semibold mb-2">Select an Available Time</h2>
+                <!-- <input type="date" name="date" class="p-2 border rounded w-full mb-2" required /> -->
+                <input type="date" name="date" value="{{ form_data.date if form_data else '' }}"
+                    class="p-2 border rounded w-full mb-2" required />
+
+                <div class="flex flex-wrap gap-2">
+                    {% for time in time_slots %}
+                    <!-- <label class="cursor-pointer"> -->
+                    <label class="cursor-pointer slot-label">
+                        <input type="radio" name="start_time" value="{{ time }}" {% if form_data and
+                            form_data.start_time==time %}checked{% endif %} class="hidden peer" required>
+                        <span class="px-4 py-1 border rounded peer-checked:bg-green-700 peer-checked:text-white">
+                            {{ time }}
+                        </span>
+                    </label>
+                    {% endfor %}
+                </div>
+
+                <div class="text-sm mt-2 space-y-1">
+                    <p><span class="inline-block w-3 h-3 bg-green-700 rounded-full mr-1"></span>Chosen time</p>
+                    <p><span class="inline-block w-3 h-3 bg-red-400 rounded-full mr-1"></span>Unavailable</p>
+                    <p><span
+                            class="inline-block w-3 h-3 bg-white border border-gray-400 rounded-full mr-1"></span>Available
+                    </p>
+                </div>
+            </div>
+
+            <!-- Services -->
+            <div class="mb-4">
+                <label for="service_id" class="block font-semibold mb-1">Choose a Service</label>
+                <!-- <select name="service_id" class="w-full border p-2 rounded">
+                    {% for service in services %}
+                    <option value="{{ service.id }}">{{ service.name }} ({{ service.duration }} min - Rp{{ service.price
+                        }})</option>
+                    {% endfor %}
+                </select> -->
+                <select name="service_id" class="w-full border p-2 rounded">
+                    {% for s in services %}
+                    <option value="{{ s.id }}" {% if form_data and form_data.service_id==s.id %}selected{% endif %}>
+                        {{ s.name }} ({{ s.duration }} min - Rp{{ s.price }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="w-full mt-4 bg-green-700 text-white py-2 rounded hover:bg-green-800">
+                Book Appointment
+            </button>
+        </form>
+    </div>
+</body>
+{% if error %}
+<div class="bg-red-100 text-red-800 border border-red-300 rounded p-3 mb-4">
+    ⚠️ {{ error }}
+</div>
+{% endif %}
+
+
+
+
+<script>
+    async function updateUnavailableSlots() {
+        const therapistId = document.querySelector('select[name="therapist_id"]').value;
+        const date = document.querySelector('input[name="date"]').value;
+
+        if (!therapistId || !date) return;
+
+        const response = await fetch(`/api/unavailable-slots?therapist_id=${therapistId}&date=${date}`);
+        const unavailable = await response.json();
+
+        document.querySelectorAll('input[name="start_time"]').forEach((input) => {
+            const label = input.parentElement;
+            const isTaken = unavailable.includes(input.value);
+
+            if (isTaken) {
+                input.disabled = true;
+                label.querySelector('span').classList.remove('border', 'peer-checked:bg-green-700', 'peer-checked:text-white');
+                label.querySelector('span').classList.add('bg-red-400', 'text-white', 'opacity-50');
+            } else {
+                input.disabled = false;
+                label.querySelector('span').classList.remove('bg-red-400', 'text-white', 'opacity-50');
+                label.querySelector('span').classList.add('border');
+            }
+        });
+    }
+
+    // trigger saat user pilih terapis / tanggal
+    document.querySelector('select[name="therapist_id"]').addEventListener('change', updateUnavailableSlots);
+    document.querySelector('input[name="date"]').addEventListener('change', updateUnavailableSlots);
+</script>
+
+
+<footer>
+    <div class="mt-10 text-center text-xs text-gray-400">
+        <a href="/admin/reset-system" class="text-red-500 hover:underline">
+            🔁 Reset demo system
+        </a> <BR>
+        <a href="/admin" class="text-red-500 hover:underline">
+            ⚠️ Demo Admin Page
+        </a> <BR>
+        (admin/admin superadmin/superadmin)
+
+    </div>
+</footer>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Edit Admin User</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 p-6">
+    {% include "admin_nav.html" %}
+    <div class="max-w-md mx-auto bg-white p-6 shadow-md rounded">
+        <h1 class="text-xl font-bold mb-4">Edit Admin User</h1>
+        <form method="post" action="/admin/edit-user" class="space-y-3">
+            <input type="hidden" name="id" value="{{ user.id }}">
+            <div>
+                <label class="block mb-1">Username</label>
+                <input type="text" name="username" value="{{ user.username }}" class="w-full border p-2 rounded"
+                    required>
+            </div>
+            <div>
+                <label class="block mb-1">Role</label>
+                <!-- <select name="role" class="w-full border p-2 rounded"> -->
+                <!-- <select name="role" class="w-full border p-2 rounded" {% if role !="superadmin" %}disabled{% endif %}>
+                    <option value="admin" {% if user.role=='admin' %}selected{% endif %}>admin</option>
+                    <option value="superadmin" {% if user.role=='superadmin' %}selected{% endif %}>superadmin</option>
+                </select> -->
+
+                {% if role != "superadmin" %}
+                <input type="hidden" name="role" value="{{ user.role.value }}">
+                <input type="text" value="{{ user.role.value }}" class="w-full border p-2 rounded bg-gray-100" readonly>
+                {% else %}
+                <select name="role" class="w-full border p-2 rounded">
+                    <option value="admin" {% if user.role=='admin' %}selected{% endif %}>admin</option>
+                    <option value="superadmin" {% if user.role=='superadmin' %}selected{% endif %}>superadmin</option>
+                </select>
+                {% endif %}
+
+            </div>
+            <div>
+                <label class="inline-flex items-center">
+                    <input type="checkbox" name="is_active" value="1" class="mr-2" {% if user.is_active %}checked{%
+                        endif %}>
+                    Active
+                </label>
+            </div>
+            <div class="text-right">
+                <button type="submit" class="bg-green-700 text-white px-4 py-1 rounded">Save</button>
+                <a href="/admin" class="ml-2 text-gray-500">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
